@@ -337,4 +337,5 @@ final class Cart {
 		return '';
 	}
 }
+
 ?>
