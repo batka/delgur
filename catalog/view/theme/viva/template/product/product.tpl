@@ -3,8 +3,15 @@
 <div id="content" class="goog-trans-section"><?php echo $content_top; ?>
   <div class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <?php echo $breadcrumb['separator']; ?>
+    	<?php if($breadcrumb['href'] != '#'){ ?>
+    		<a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    	<?php }else{ ?>
+    		#: <span class="product_id"><?php echo $breadcrumb['text']; ?></span>
+    	<?php } ?>
+    
     <?php } ?>
+    
   </div>
   <h1><?php echo $heading_title; ?></h1>
   <div class="product-info">
@@ -68,6 +75,12 @@
         <div class="minimum"><?php echo $text_minimum; ?></div>
         <?php } ?>
       </div>
+      <!-- Taobao link BEGIN -->
+      <div class="links">
+      	<a title="Открыть оригинальную страницу этого товара на taobao.com" class="taobao-link" rel="nofollow" href="<?php echo $taobao_url; ?>" target="_blank">Этот товар на <strong>taobao.com</strong>
+      	</a>
+      </div>
+      <!-- Taobao link END -->
       <?php if ($review_status) { ?>
       <div class="review">
         <div class="share"><!-- AddThis Button BEGIN -->

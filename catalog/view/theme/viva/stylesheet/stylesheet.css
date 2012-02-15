@@ -361,7 +361,7 @@ label {
 	border-top:0;
 }
 .popup-cats li.haschild{
-	background:url(http://www.vivatao.com/themes/vivatao/images/categoty_menu_str.png) no-repeat 200px center;
+	background:url(../image/categoty_menu_str.png) no-repeat 200px center;
 	padding-left:10px;
 }
 .allcats a.cats-title{
@@ -370,7 +370,7 @@ label {
 	padding-left:35px;
 	font-weight:bold;
 	font-size:14px;
-	background:url(http://www.vivatao.com/themes/vivatao/images/allcats-ico.gif) no-repeat left center;
+	background:url(../image/allcats-ico.gif) no-repeat left center;
 }
 .popup-cats a{
 	display:block;
@@ -379,13 +379,13 @@ label {
 	padding-bottom:6px;
 	font-weight:bold;
 	font-size:12px;
-	background:url(http://www.vivatao.com/themes/vivatao/images/categoty_menu_underline.png) no-repeat left bottom;
+	background:url(../image/categoty_menu_underline.png) no-repeat left bottom;
 }
 .popup-cats .haschild a{
 	width:220px;
 }
 .allcats .popup-cats li.cats-title {
-	background:url(http://www.vivatao.com/themes/vivatao/images/popup-cats-ico.gif) no-repeat left center;
+	background:url(../image/popup-cats-ico.gif) no-repeat left center;
 }
 .allcats .popup-cats li.cats-title a{
 	display:block;
@@ -396,7 +396,7 @@ label {
 	padding-left:35px;
 	font-weight:bold;
 	font-size:14px;
-	background:url(http://www.vivatao.com/themes/vivatao/images/categoty_menu_underline.png) no-repeat 10px bottom;
+	background:url(../image/categoty_menu_underline.png) no-repeat 10px bottom;
 }
 .popup-cats a:hover{
 	color:#ff0000;
@@ -435,6 +435,9 @@ label {
 .breadcrumb {
 	color: #CCCCCC;
 	margin-bottom: 10px;
+}
+.breadcrumb .product_id{
+	color: #142654;
 }
 .success, .warning, .attention, .information {
 	padding: 10px 10px 10px 33px;
@@ -682,6 +685,24 @@ a.button:hover span {
 	padding: 4px;
 	border: 1px solid #E1E1E1;
 	width: 150px;
+	border-radius: 5px 5px 5px 5px;
+}
+
+#column-left .box .box-content .box-product div{
+	width: 85px;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+#column-left .box .box-content .box-product .cart{
+	visibility: hidden;
+	overflow: hidden;
+}
+#column-left .box .box-content .box-product .image img{
+	padding: 4px;
+	border: 1px solid #E1E1E1;
+	width: 80px;
 	border-radius: 5px 5px 5px 5px;
 }
 .box-product .name {
@@ -1022,6 +1043,15 @@ a.button:hover span {
 .product-info {
 	overflow: auto;
 	margin-bottom: 20px;
+}
+.product-info .links{
+	padding: 0px 5px 10px 5px;
+}
+.product-info .links .taobao-link{
+	color: #F15A24;
+	padding-left: 22px;
+	background: url('../image/taobao-ico.gif') no-repeat;
+	
 }
 .product-info > .left {
 	float: left;

@@ -16,7 +16,8 @@
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
-<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/magazintao/stylesheet/reset.css" />
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/magazintao/stylesheet/stylesheet.css" />
 <?php foreach ($styles as $style) { ?>
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
@@ -35,10 +36,10 @@
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
 <!--[if IE 7]>
-<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie7.css" />
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/magazintao/stylesheet/ie7.css" />
 <![endif]-->
 <!--[if lt IE 7]>
-<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie6.css" />
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/magazintao/stylesheet/ie6.css" />
 <script type="text/javascript" src="catalog/view/javascript/DD_belatedPNG_0.0.8a-min.js"></script>
 <script type="text/javascript">
 DD_belatedPNG.fix('#logo img');
@@ -134,3 +135,4 @@ DD_belatedPNG.fix('#logo img');
 </div>
 <?php } ?>
 <div id="notification"></div>
+
