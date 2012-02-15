@@ -22,10 +22,25 @@
 	 *------------------分页样式---------------------
 	 */	
 </style>
+<script>
+function select_all_category(checked)
+{
+	if (checked)
+	{
+		$('.cid_box').attr('checked', true);
+	}
+	else
+	{
+		$('.cid_box').attr('checked', false);	
+	}
+}
+</script>
+<iframe src="" name="download_frame" id="download_frame" style="width:100%;height:50px;" frameborder = 0></iframe>
 <h3><?=$parent_name ?></h3>
-<div style="display:none;"><iframe src="" name="download_frame" id="download_frame"></iframe></div>
 <form action="/taoapi/category/download.php" method="post" enctype="multipart/form-data" target="download_frame">
-<input type="submit" value="提交">
+<input type="checkbox" onclick="select_all_category(this.checked) "> 全选/Select All &nbsp; 
+<input type="submit" value="下载/Download">
+<input type="button" value="<<返回/Back" onclick="history.go(-1)">
 <input type="hidden" name="parent_cid" value="<?=$parent_cid ?>" />
 <table border="0" width="100%" class="items_table" cellpadding="0" cellspacing="0">
 	<?php
@@ -37,7 +52,7 @@
 	?>
 	<tr>
 		<td>
-			<input type="checkbox" name="cid[]" value="<?=$val['cid'].':'.($val['is_parent'] == 'true' ? 1 : 0).':'.$val['name'] ?>" /><?=$val['name'] ?> 
+			<input type="checkbox" class="cid_box" name="cid[]" value="<?=$val['cid'].':'.($val['is_parent'] == 'true' ? 1 : 0).':'.$val['name'] ?>" /><?=$val['name'] ?> 
 			<?php if (strval($val['is_parent']) == 'true'): ?>
 				<a href="<?=$link; ?>" class="sub_category">+子分类</a>
 			<?php endif; ?>

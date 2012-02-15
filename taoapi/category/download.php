@@ -1,6 +1,7 @@
 <?php 
 	
 	$api_path = str_replace(array('category\download.php', 'category/download.php'), '', __FILE__);
+	//$api_path = '';
 	include_once($api_path.'config.php');
 	include_once($api_path.'lib/functions.php');
 	include_once($api_path.'lib/page.Class.php');
@@ -31,7 +32,8 @@
 			foreach ($languages as $lang_id => $code2)
 			{
 				$aCategories[$lang_id] = array();
-				
+				$aCategories[$lang_id] = $_POST['cid'];
+				/*
 				if (strpos(strtolower($code2), 'cn') === false)
 				{
 					//翻译标题
@@ -41,16 +43,16 @@
 					$str = str_replace('|', ':', $str);
 					$arr = explode(',', $str);
 					
-					$aCategories[$lang_id] = $arr;
+					$aCategories[$lang_id] = $_POST['cid'];
 				}
 				else
 				{
 					$aCategories[$lang_id] = $_POST['cid'];
 				}
+				*/
 			}
 		}
-		//print_r($aCategories);die();
+		print_r($aCategories);die();
 		$DBCtrl->addCategories($aCategories, $parent_cid);
-		echo "<script>alert('下载完成');</script>";
 	}
 ?>
