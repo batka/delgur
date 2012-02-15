@@ -5,7 +5,11 @@ class ModelTotalSubTotal extends Model {
 		
 		$sub_total = 0;
 		foreach ($this->cart->getProducts() as $product) {
-			$sub_total += $this->currency->format($product['total'], '', '', FALSE);
+		
+			$f_price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), '', '', false);
+			$sub_total += $this->currency->format($f_price*$product['quantity'], '', 1, FALSE);
+			
+			//$sub_total += $this->currency->format($product['total'], '', '', FALSE);
 		}
 		
 		if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {

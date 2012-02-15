@@ -71,7 +71,7 @@ class ControllerAccountOrder extends Controller {
 				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'products'   => $product_total,
-				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+				'total'      => $this->currency->format($result['total'], $result['currency_code'], 1),
 				'href'       => $this->url->link('account/order/info', 'order_id=' . $result['order_id'], 'SSL')
 			);
 		}
@@ -322,6 +322,7 @@ class ControllerAccountOrder extends Controller {
 			$products = $this->model_account_order->getOrderProducts($this->request->get['order_id']);
 
 			$this->load->model('tool/image');
+			
       		foreach ($products as $product) {
 			
 				if ($product['image']) {
@@ -331,6 +332,25 @@ class ControllerAccountOrder extends Controller {
 				}	
 				$option_data = unserialize($product['lang_option']);
 				
+				$product_total = 0;
+					
+				foreach ($products as $product_2) {
+					if ($product_2['product_id'] == $product['product_id']) {
+						$product_total += $product_2['quantity'];
+					}
+				}
+				
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+				
+					$f_price = $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value'], false);
+					$total = $this->currency->format($this->tax->calculate($f_price*$product['quantity'], '', $this->config->get('config_tax')), '', 1);
+					
+					$price = $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value']);
+				} else {
+					$price = false;
+					$total = false;
+				}
+				
         		$this->data['products'][] = array(
 					'href'             => $this->url->link('product/product', 'product_id=' . $product['product_id']),
 					'order_product_id' => $product['order_product_id'],
@@ -339,11 +359,12 @@ class ControllerAccountOrder extends Controller {
           			'model'            => $product['model'],
           			'option'           => $option_data,
           			'quantity'         => $product['quantity'],
-          			'price'            => $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value']),
-					'total'            => $this->currency->format($product['total'], $order_info['currency_code'], $order_info['currency_value']),
+					'price'    => $price,
+					'total'    => $total,
 					'selected'         => isset($this->request->post['selected']) && in_array($result['order_product_id'], $this->request->post['selected'])
         		);
       		}
+			
 
       		$this->data['totals'] = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
 			

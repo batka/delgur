@@ -272,6 +272,7 @@ class ControllerCheckoutConfirm extends Controller {
 			$this->data['products'] = array();
 			
 			$this->load->model('tool/image');
+		
 			foreach ($this->cart->getProducts() as $product) {
 			
 				if ($product['image']) {
@@ -279,6 +280,16 @@ class ControllerCheckoutConfirm extends Controller {
 				} else {
 					$image = '';
 				}	
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+				
+					$f_price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), '', '', false);
+					$total = $this->currency->format($this->tax->calculate($f_price*$product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), '', 1);
+					
+					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$price = false;
+					$total = false;
+				}
 				$this->data['products'][] = array(
 					'product_id' => $product['product_id'],
 					'name'       => $product['name'],
@@ -289,12 +300,12 @@ class ControllerCheckoutConfirm extends Controller {
 					'quantity'   => $product['quantity'],
 					'subtract'   => $product['subtract'],
 					'tax'        => $this->tax->getTax($product['total'], $product['tax_class_id']),
-					'price'      => $this->currency->format($product['price']),
-					'total'      => $this->currency->format($product['total']),
+					'price'      => $price,
+					'total'      => $total,
 					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 				); 
 			} 
-			
+						
 			// Gift Voucher
 			$this->data['vouchers'] = array();
 			

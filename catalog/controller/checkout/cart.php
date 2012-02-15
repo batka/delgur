@@ -151,14 +151,13 @@ class ControllerCheckoutCart extends Controller {
 
 				
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+				
+					$f_price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), '', '', false);
+					$total = $this->currency->format($this->tax->calculate($f_price*$product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), '', 1);
+					
 					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
 				} else {
 					$price = false;
-				}
-
-				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-					$total = $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')));
-				} else {
 					$total = false;
 				}
 				
@@ -407,14 +406,13 @@ class ControllerCheckoutCart extends Controller {
 			}			
 							
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+			
+				$f_price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), '', '', false);
+				$total = $this->currency->format($this->tax->calculate($f_price*$result['quantity'], $result['tax_class_id'], $this->config->get('config_tax')), '', 1);
+				
 				$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
 			} else {
 				$price = false;
-			}
-
-			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-				$total = $this->currency->format($this->tax->calculate($result['total'], $result['tax_class_id'], $this->config->get('config_tax')));
-			} else {
 				$total = false;
 			}
 				
@@ -467,8 +465,8 @@ class ControllerCheckoutCart extends Controller {
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('total/' . $result['code']);
-		
 					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+					
 				}
 			}
 			
@@ -481,7 +479,7 @@ class ControllerCheckoutCart extends Controller {
 			array_multisort($sort_order, SORT_ASC, $total_data);
 		}
 		
-		$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+		$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, '', 1));
 		
 		$this->data['totals'] = $total_data;
 		

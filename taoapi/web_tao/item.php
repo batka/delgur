@@ -106,9 +106,16 @@ class CallTaobao {
 		list($cn_options, $Item['Skus']) = $this->split_skus($Item['skus'], 'cn');
 		
 		list($Item['options'], $Item['Skus']) = $this->split_skus($Item['skus'], $data['language']);
-		list($Item['props_keys'], $Item['props_values']) = $this->split_props_name($Item['props_name']);	
-		list($Item['Props']) = $this->split_props($Item['props'], $cn_options['options']);
+		list($Item['props_keys'], $Item['props_values']) = $this->split_props_name($Item['props_name']);
 		
+		if (!empty($Item['props']))
+		{
+			list($Item['Props']) =  $this->split_props($Item['props'], $cn_options['options']);
+		}
+		else
+		{
+			$Item['Props'] = array();
+		}
 		$cn_props_keys = $Item['props_keys'];
 		
 		if (!empty($Item['Skus']))

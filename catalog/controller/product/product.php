@@ -99,7 +99,7 @@ class ControllerProductProduct extends Controller {
 		
 		if ($Item) {
 			$url = '';
-			echo $Item['detail_url'];
+			//echo $Item['detail_url'];
 			$Item['product_id']  = $Item['num_iid'];
 			
 			$Item['description'] = $Item['desc'];
@@ -133,9 +133,10 @@ class ControllerProductProduct extends Controller {
 			if (isset($this->request->get['filter_category_id'])) {
 				$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
 			}
-												
+			
+			//Breadcrumb link for current product									
 			$this->data['breadcrumbs'][] = array(
-				'text'      => substr($product_info['name'], 0, 10).'..',
+				'text'      => $product_info['product_id'],
 				'href'      => '#'/*$this->url->link('product/product', $url . '&product_id=' . $this->request->get['product_id'])*/,
 				'separator' => $this->language->get('text_separator')
 			);		
@@ -145,8 +146,9 @@ class ControllerProductProduct extends Controller {
 //			$this->document->setKeywords($product_info['meta_keyword']);
 			$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id']), 'canonical');
 			
+			//Preparing values to send to template
 			$this->data['heading_title'] = $product_info['name'];
-			
+			$this->data['taobao_url'] = $Item['detail_url'];
 			$this->data['text_select'] = $this->language->get('text_select');
 			$this->data['text_manufacturer'] = $this->language->get('text_manufacturer');
 			$this->data['text_model'] = $this->language->get('text_model');

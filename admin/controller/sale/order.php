@@ -353,7 +353,7 @@ class ControllerSaleOrder extends Controller {
 				'order_id'      => $result['order_id'],
 				'customer'      => $result['customer'],
 				'status'        => $result['status'],
-				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+				'total'         => $this->currency->format($result['total'], $result['currency_code'], 1),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'selected'      => isset($this->request->post['selected']) && in_array($result['order_id'], $this->request->post['selected']),
@@ -1347,28 +1347,19 @@ class ControllerSaleOrder extends Controller {
 					$image = '';
 				}
 				
-				$option_data = array();
-				/*
-				$options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);
-
-				foreach ($options as $option) {
-					if ($option['type'] != 'file') {
-						$option_data[] = array(
-							'name'  => $option['name'],
-							'value' => $option['value'],
-							'type'  => $option['type']
-						);
-					} else {
-						$option_data[] = array(
-							'name'  => $option['name'],
-							'value' => utf8_substr($option['value'], 0, strrpos($option['value'], '.')),
-							'type'  => $option['type'],
-							'href'  => $this->url->link('sale/order/download', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'] . '&order_option_id=' . $option['order_option_id'], 'SSL')
-						);						
-					}
-				}
-				*/
+				$option_data = array();				
 				$option_data = unserialize($product['cn_option']);
+				
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+				
+					$f_price = $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value'], false);
+					$total = $this->currency->format($f_price*$product['quantity'], $order_info['currency_code'], 1);					
+					$price = $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value']);
+				} else {
+					$price = false;
+					$total = false;
+				}
+				
 				$this->data['products'][] = array(
 					'order_product_id' => $product['order_product_id'],
 					'product_id'       => $product['product_id'],
@@ -1378,8 +1369,8 @@ class ControllerSaleOrder extends Controller {
 					'option'   		   => $option_data,
 					'quantity'		   => $product['quantity'],
 					'taobao_order'	   => $product['taobao_order'],
-					'price'    		   => $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value']),
-					'total'    		   => $this->currency->format($product['total'], $order_info['currency_code'], $order_info['currency_value']),
+					'price'    		   => $price,
+					'total'    		   => $total,
 					'href'     		   => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL')
 				);
 			}
