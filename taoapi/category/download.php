@@ -52,7 +52,7 @@
 				*/
 			}
 		}
-		print_r($aCategories);die();
+		//print_r($aCategories);die();
 		$DBCtrl->addCategories($aCategories, $parent_cid);
 	}
 ?>

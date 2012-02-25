@@ -29,7 +29,13 @@ class ControllerCatalogCategory extends Controller {
 
 		$this->getForm();
 	}
-
+	
+	/**
+	 * update() updates category 
+	 *
+	 * @return void
+	 * @author Batka
+	 */
 	public function update() {
 		$this->load->language('catalog/category');
 
@@ -47,7 +53,8 @@ class ControllerCatalogCategory extends Controller {
 
 		$this->getForm();
 	}
-
+	
+	
 	public function delete() {
 		$this->load->language('catalog/category');
 
@@ -201,6 +208,10 @@ class ControllerCatalogCategory extends Controller {
       		'separator' => ' :: '
    		);
 		
+		/*
+		*if category exist call update function. else call insert function
+		*
+		*/
 		if (!isset($this->request->get['category_id'])) {
 			$this->data['action'] = $this->url->link('catalog/category/insert', 'token=' . $this->session->data['token'], 'SSL');
 		} else {

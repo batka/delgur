@@ -17,12 +17,45 @@
 <?php foreach ($styles as $style) { ?>
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
-<script type="text/javascript" src="view/javascript/jquery/jquery-1.6.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
 <link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" />
 <script type="text/javascript" src="view/javascript/jquery/ui/external/jquery.bgiframe-2.1.2.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/tabs.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/superfish/js/superfish.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jquery.jeditable.js"></script>
+<script>
+	$(document).ready(function() {
+		
+		
+		$('.edit_sort_order').editable('<?php echo $ajax ?>', {
+			submitdata : {change: "sort_order"},
+			submit    : 'ok',
+	        indicator : '<img src="view/image/indicator.gif">',
+	        tooltip   : 'Click to edit...'
+			
+	    });
+		$('.edit_cat_name').editable('<?php echo $ajax ?>', {
+			submitdata : {change: "cat_name"},
+			submit    : 'ok',
+	        indicator : '<img src="view/image/indicator.gif">',
+	        tooltip   : 'Click to edit...'
+			
+	    });
+		
+		/*$('.edit_area').editable(function(value, settings) { 
+		     console.log(this);
+		     console.log(value);
+		     console.log(settings);
+		     return(value);
+		  }, { 
+		     submit    : 'ok',
+	         indicator : '<img src="view/image/indicator.gif">',
+	         tooltip   : 'Click to edit...',
+			 id		   : '45',
+		 });*/
+	 });
+</script>
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
@@ -52,6 +85,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+	<span id="messages"></span>
 <div id="container">
 <div id="header">
   <div class="div1">

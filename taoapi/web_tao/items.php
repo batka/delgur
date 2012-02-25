@@ -2,12 +2,18 @@
 	
 //	include_once($api_path.'check_auth.php');
 	/* Build By fhalipay */
-	
+/**
+ * 淘宝API下载产品列表 class
+ *
+ * @package default
+ * @author Batka
+ */
 class CallTaobao {
 	
 	function QueryItems($data)
 	{
 		$api_path = str_replace(array('web_tao\items.php', 'web_tao/items.php'), '', __FILE__);
+		
 		include_once($api_path.'config.php');
 		include_once($api_path.'lib/functions.php');
 		include_once($api_path.'lib/page.Class.php');

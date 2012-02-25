@@ -1,4 +1,10 @@
 <?
+/**
+ * Opencart Database Control class
+ *
+ * @package default
+ * @author Batka
+ */
 class DBCtrlModel {
 	
 	public $db_api;
@@ -152,6 +158,40 @@ class DBCtrlModel {
 				$this->db_api->query($sql);
 			}
 		}
+	}
+	public function editCategoryAjax($change, $id, $value, $language){
+		
+		if($change=="sort_order"){
+			$sql = 'UPDATE ' . DB_PREFIX . 'category SET sort_order = "'. $value . '" WHERE category_id = "'. $id . '" ;';
+
+			$sql = mb_substr($sql, 0, -1, 'utf-8');
+			if($this->db_api->query($sql)){
+				echo $value;
+			}
+		}
+		if($language == "ru") $language = "3";
+		if($language == "en") $language = "1";
+		if($language == "cn") $language = "2";
+		
+		if($change=="cat_name"){
+			$sql = 'UPDATE ' . DB_PREFIX . 'category_description SET name = "'. $value . '" WHERE category_id = "'. $id . '" AND language_id = "'. $language .'" ;';
+
+			$sql = mb_substr($sql, 0, -1, 'utf-8');
+			if($this->db_api->query($sql)){
+				echo $value;
+			}
+		}
+		//echo $id;
+		/*if($this->db_api->query($sql)){
+		
+		$sql = 'SELECT sort_order FROM ' . DB_PREFIX . 'category WHERE category_id = "$id" ;';
+		$sql = mb_substr($sql, 0, -1, 'utf-8');
+		$result = $this->db_api->query($sql);
+		$row = mysql_fetch_array($result)
+		  
+		echo $row['sort_order'][0];
+		}*/
+		//echo $value." id=".$id;
 	}
 	/*插入商品*/
 	public function addProduct($data)

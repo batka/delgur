@@ -144,7 +144,9 @@ function googleOnloadCallback()
       </div>
       <?php } ?>
     </li>
+
     <?php } ?>
+
   </ul>
 </div>
 <?php } ?>

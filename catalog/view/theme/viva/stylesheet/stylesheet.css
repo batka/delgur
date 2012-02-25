@@ -104,15 +104,15 @@ label {
 }
 /* header */
 #header {
-	height: 90px;
-	margin-bottom: 7px;
-	padding-bottom: 4px;
+	height: 80px;
+	margin-bottom: 1px;
+	padding-bottom: 1px;
 	position: relative;
 	z-index: 99;
 }
 #header #logo {
 	position: absolute;
-	top: 25px;
+	top: 10px;
 	left: 15px;
 }
 #language {
@@ -313,9 +313,9 @@ label {
 #header .links {
 	position: absolute;
 	right: 0px;
-	bottom: 20px;
+	bottom: 7px;
 	font-size: 10px;
-	padding-right: 10px;
+	padding-right: 5px;
 }
 #header .links a {
 	float: left;
@@ -362,6 +362,9 @@ label {
 }
 .popup-cats li.haschild{
 	background:url(../image/categoty_menu_str.png) no-repeat 200px center;
+	padding-left:10px;
+}
+.popup-cats li{
 	padding-left:10px;
 }
 .allcats a.cats-title{

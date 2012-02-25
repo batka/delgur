@@ -185,6 +185,7 @@ class ControllerCommonHeader extends Controller {
 			
 			$this->data['taoapi_download'] = $this->url->link('taoapi/download', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['taoapi_down_category'] = $this->url->link('taoapi/down_category', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['ajax'] = 'http://localhost:8888/delgur/taoapi/category/save.php';
 		}
 		
 		$this->template = 'common/header.tpl';

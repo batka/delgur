@@ -175,14 +175,14 @@ class ControllerCommonHeader extends Controller {
 			}
 		}
 		
-		// Menu
+		// Drop down Menu
 		$this->load->model('catalog/category');
 		$this->load->model('catalog/product');
 		
-		$this->data['categories'] = array();
+		/*$this->data['categories'] = array();
 					
 		$categories = $this->model_catalog_category->getCategories(0);
-		
+		//print_r($categories);
 		foreach ($categories as $category) {
 			if ($category['top']) {
 				$children_data = array();
@@ -193,14 +193,14 @@ class ControllerCommonHeader extends Controller {
 					$data = array(
 						'filter_category_id'  => $child['category_id'],
 						'filter_sub_category' => true	
-					);		
-						
+						);		
+					//print_r($child);echo "|||||||||||||||||||||||||||";
 					$product_total = $this->model_catalog_product->getTotalProducts($data);
 									
 					$children_data[] = array(
 						'name'  => $child['name'],
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])	
-					);					
+						);					
 				}
 				
 				// Level 1
@@ -211,6 +211,53 @@ class ControllerCommonHeader extends Controller {
 					'href'     => $this->url->link('product/category', 'path=' . $category['category_id'])
 				);
 			}
+		}*/
+		
+		$this->data['categories'] = array();
+					
+		$categories_1 = $this->model_catalog_category->getCategories(0);
+		
+		foreach ($categories_1 as $category_1) {
+			$level_2_data = array();
+			
+			$categories_2 = $this->model_catalog_category->getCategories($category_1['category_id']);
+			
+			foreach ($categories_2 as $category_2) {
+				$level_3_data = array();
+				
+				$categories_3 = $this->model_catalog_category->getCategories($category_2['category_id']);
+				
+				foreach ($categories_3 as $category_3) {
+					$level_4_data = array();
+
+					$categories_4 = $this->model_catalog_category->getCategories($category_3['category_id']);
+					
+					foreach ($categories_4 as $category_4) {
+
+						$level_4_data[] = array(
+							'name' => $category_4['name'],
+							'href' => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'] . '_' . $category_4['category_id'])
+						);
+					}
+					
+					$level_3_data[] = array(
+						'name' => $category_3['name'],
+						'href' => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'])
+					);
+				}
+				
+				$level_2_data[] = array(
+					'name'     => $category_2['name'],
+					'children' => $level_3_data,
+					'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'])	
+				);					
+			}
+			
+			$this->data['categories'][] = array(
+				'name'     => $category_1['name'],
+				'children' => $level_2_data,
+				'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'])
+			);
 		}
 				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {

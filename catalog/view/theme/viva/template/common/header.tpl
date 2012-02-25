@@ -19,12 +19,13 @@
 <?php foreach ($styles as $style) { ?>
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
-<script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery/ui/external/jquery.cookie.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery/tabs.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/common.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
@@ -81,23 +82,66 @@
 </div>
 <div class="shop-toolbar">
 	<div class="allcats" id="allcats">
-	  <div class="cats_head"><a href="" class="cats-title"><?=$text_all_category ?></a></div>
-	  <ul class="popup-cats">
-		<li class="cats-title"><a href=""><?=$text_all_category ?></a></li>
-        <?php foreach ($categories as $category) { ?>
-        <li class="haschild">
-          <a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
-          <?php if ($category['children']) { ?>
-          <ul>
-            <?php foreach ($category['children'] as $child) { ?>
-            <li>
-              <a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
-            </li>
-            <?php } ?>
-          </ul>
-          <?php } ?>
-        </li>
-        <?php } ?>
+		<div class="cats_head"><a href="" class="cats-title"><?=$text_all_category ?></a></div>
+	  	<ul class="popup-cats">
+			<li class="cats-title">
+				<a href="">
+					<?=$text_all_category ?>
+				</a>
+			</li>
+        	<?php foreach ($categories as $category_1) { ?>
+	        	<li <?php if ($category_1['children']) echo 'class="haschild"'; ?>>
+					<a href="<?php echo $category_1['href']; ?>">
+						<?php echo $category_1['name']; ?>
+					</a>
+		        	<?php if ($category_1['children']) { ?>
+		        		<ul>
+		            		<?php foreach ($category_1['children'] as $category_2) { ?>
+		            			<li <?php if ($category_2['children']) echo 'class="haschild"'; ?> >
+									<a href="<?php echo $category_2['href']; ?>">
+										<?php echo $category_2['name']; ?>
+									</a>
+		              				<?php if ($category_2['children']) { ?>
+		              					<ul>
+		                					<?php foreach ($category_2['children'] as $category_3) { ?>
+		                						<li>
+													<a href="<?php echo $category_3['href']; ?>">
+														<?php echo $category_3['name']; ?>
+													</a>
+												</li>
+		               						<?php } ?>
+		           						</ul>
+	              					<?php } ?>
+		            			</li>
+		            		<?php } ?>
+		          		</ul>
+					<?php } ?>
+		        </li>
+	        <?php } ?>
+
+			<?php /* foreach ($categories as $category) { ?>
+        		<li class="haschild">
+          			<a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
+          			<?php if ($category['children']) { ?>
+          				<ul>
+            			<?php foreach ($category['children'] as $child) { ?>
+            				<li>
+              					<a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
+								<?php if ($child['children']) { ?>
+	          						<ul>
+	            					<?php foreach ($child['children'] as $child1) { ?>
+	            						<li>
+	              							<a href="<?php echo $child1['href']; ?>"><?php echo $child1['name']; ?></a>
+	            						</li>
+	            					<?php } ?>
+	          						</ul>
+	          					<?php } ?>
+            				</li>
+            			<?php } ?>
+          				</ul>
+          			<?php } ?>
+        		</li>
+        	<?php } */?>
       </ul>
 	</div>
 	<div class="searchbar">

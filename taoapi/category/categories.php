@@ -37,7 +37,7 @@ function select_all_category(checked)
 </script>
 <iframe src="" name="download_frame" id="download_frame" style="width:100%;height:50px;" frameborder = 0></iframe>
 <h3><?=$parent_name ?></h3>
-<form action="/taoapi/category/download.php" method="post" enctype="multipart/form-data" target="download_frame">
+<form action="http://localhost:8888/delgur/taoapi/category/download.php" method="post" enctype="multipart/form-data" target="download_frame">
 <input type="checkbox" onclick="select_all_category(this.checked) "> 全选/Select All &nbsp; 
 <input type="submit" value="下载/Download">
 <input type="button" value="<<返回/Back" onclick="history.go(-1)">
