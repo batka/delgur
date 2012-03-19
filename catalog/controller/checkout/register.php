@@ -7,14 +7,24 @@ class ControllerCheckoutRegister extends Controller {
 		
 		$json = array();
 		
+		//If user logged in redirect to checkout
 		if ($this->customer->isLogged()) {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');			
 		}
 		
-		if ((!$this->cart->hasProducts() && (!isset($this->session->data['vouchers']) || !$this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		//if cart has products
+		if ((!$this->cart->hasProducts() 
+				&& (!isset($this->session->data['vouchers']) 
+				|| !$this->session->data['vouchers'])
+			) 
+			|| (!$this->cart->hasStock() 
+				&& !$this->config->get('config_stock_checkout'))
+			) 
+		{
 			$json['redirect'] = $this->url->link('checkout/cart');				
 		}
-					
+		
+
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			if (!$json) {			
 				if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
@@ -28,15 +38,18 @@ class ControllerCheckoutRegister extends Controller {
 				if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
 					$json['error']['email'] = $this->language->get('error_email');
 				}
-		
-				if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+				
+				//if email exists show error_exists
+				if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) 
+				{
 					$json['error']['warning'] = $this->language->get('error_exists');
 				}
 				
-				if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				//telephone
+				/*if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 					$json['error']['telephone'] = $this->language->get('error_telephone');
-				}
-		
+				}*/
+				
 				if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
 					$json['error']['address_1'] = $this->language->get('error_address_1');
 				}

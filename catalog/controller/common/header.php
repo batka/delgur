@@ -1,31 +1,57 @@
-<?php   
+<?php  
+/**
+ * header class
+ *
+ * @package default
+ * @author 
+ **/
 class ControllerCommonHeader extends Controller {
 	protected function index() {
+		//get Title
 		$this->data['title'] = $this->document->getTitle();
 		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+		//Check whether HTTPS URL or normal HTTP URL for config URL
+		if (isset($this->request->server['HTTPS']) 
+			&& (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))
+		) {
 			$this->data['base'] = $this->config->get('config_ssl');
 		} else {
 			$this->data['base'] = $this->config->get('config_url');
 		}
 		
-		$this->data['description'] = $this->document->getDescription();
-		$this->data['keywords'] = $this->document->getKeywords();
-		$this->data['links'] = $this->document->getLinks();	 
-		$this->data['styles'] = $this->document->getStyles();
-		$this->data['scripts'] = $this->document->getScripts();
-		$this->data['lang'] = $this->language->get('code');
-		$this->data['direction'] = $this->language->get('direction');
+		/* 
+		 * Get description of the store
+		 *     keywords
+		 *     links
+		 *     styles links
+		 *     scripts javascript
+		 *     language code Ex.: "ru"
+		 * 	   direction ?
+		 *     google_analytics
+		 */
+
+		$this->data['description'] 		= $this->document->getDescription();
+		$this->data['keywords'] 		= $this->document->getKeywords();
+		$this->data['links'] 			= $this->document->getLinks();	 
+		$this->data['styles'] 			= $this->document->getStyles();
+		$this->data['scripts'] 			= $this->document->getScripts();
+		$this->data['lang'] 			= $this->language->get('code');
+		$this->data['direction'] 		= $this->language->get('direction');
 		$this->data['google_analytics'] = html_entity_decode($this->config->get('config_google_analytics'), ENT_QUOTES, 'UTF-8');
 		
+		//load the language for header
 		$this->language->load('common/header');
 		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+		//Check whether HTTPS URL or normal HTTP URL for image URL
+		if (isset($this->request->server['HTTPS']) 
+			&& (($this->request->server['HTTPS'] == 'on') 
+				|| ($this->request->server['HTTPS'] == '1'))) {
 			$server = HTTPS_IMAGE;
 		} else {
 			$server = HTTP_IMAGE;
 		}	
-				
+		
+		
 		if ($this->config->get('config_icon') && file_exists(DIR_IMAGE . $this->config->get('config_icon'))) {
 			$this->data['icon'] = $server . $this->config->get('config_icon');
 		} else {
@@ -34,11 +60,13 @@ class ControllerCommonHeader extends Controller {
 		
 		$this->data['name'] = $this->config->get('config_name');
 				
-		if ($this->config->get('config_logo') && file_exists(DIR_IMAGE . $this->config->get('config_logo'))) {
+		/*if ($this->config->get('config_logo') && file_exists(DIR_IMAGE . $this->config->get('config_logo'))) {
 			$this->data['logo'] = $server . $this->config->get('config_logo');
 		} else {
 			$this->data['logo'] = '';
-		}
+		}*/
+		
+		//$this->data['logo'] =  $server."data/logo.gif";
 		
 		// Calculate Totals
 		$total_data = array();					
@@ -72,6 +100,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_cart'] = $this->language->get('text_cart');
 		$this->data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, '', 1));
     	$this->data['text_search'] = $this->language->get('text_search');
+    	$this->data['button_search'] = $this->language->get('text_search');
 		$this->data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
 		$this->data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));
 		$this->data['text_account'] = $this->language->get('text_account');
@@ -79,7 +108,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_language'] = $this->language->get('text_language');
     	$this->data['text_currency'] = $this->language->get('text_currency');
     	$this->data['text_all_category'] = $this->language->get('text_all_category');
-				
+		$this->data['text_category'] = $this->language->get('text_category');
 		$this->data['home'] = $this->url->link('common/home');
 		$this->data['wishlist'] = $this->url->link('account/wishlist');
 		$this->data['logged'] = $this->customer->isLogged();
@@ -176,44 +205,17 @@ class ControllerCommonHeader extends Controller {
 		}
 		
 		// Drop down Menu
-		$this->load->model('catalog/category');
-		$this->load->model('catalog/product');
 		
+		// if it it's not home page then show categories on header
+		if (!isset($this->request->get['route']) || (isset($this->request->get['route']) && $this->request->get['route'] == 'common/home')) {
+                $this->data['current_page'] = "homepage";
+             	//echo $this->data['current_page'];
+        }else $this->data['current_page'] = "";
+
+        if($this->data['current_page'] != "homepage"){
+	        $this->data['categories'] = $this->model_catalog_category->getAllCategories(0,10);
+		}
 		/*$this->data['categories'] = array();
-					
-		$categories = $this->model_catalog_category->getCategories(0);
-		//print_r($categories);
-		foreach ($categories as $category) {
-			if ($category['top']) {
-				$children_data = array();
-				
-				$children = $this->model_catalog_category->getCategories($category['category_id']);
-				
-				foreach ($children as $child) {
-					$data = array(
-						'filter_category_id'  => $child['category_id'],
-						'filter_sub_category' => true	
-						);		
-					//print_r($child);echo "|||||||||||||||||||||||||||";
-					$product_total = $this->model_catalog_product->getTotalProducts($data);
-									
-					$children_data[] = array(
-						'name'  => $child['name'],
-						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])	
-						);					
-				}
-				
-				// Level 1
-				$this->data['categories'][] = array(
-					'name'     => $category['name'],
-					'children' => $children_data,
-					'column'   => $category['column'] ? $category['column'] : 1,
-					'href'     => $this->url->link('product/category', 'path=' . $category['category_id'])
-				);
-			}
-		}*/
-		
-		$this->data['categories'] = array();
 					
 		$categories_1 = $this->model_catalog_category->getCategories(0);
 		
@@ -235,30 +237,37 @@ class ControllerCommonHeader extends Controller {
 					foreach ($categories_4 as $category_4) {
 
 						$level_4_data[] = array(
-							'name' => $category_4['name'],
-							'href' => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'] . '_' . $category_4['category_id'])
+							'name' 			=> $category_4['name'],
+							'category_id' 	=> $category_4['category_id'],
+							'href' 			=> $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'] . '_' . $category_4['category_id'])
 						);
+
+						
 					}
 					
 					$level_3_data[] = array(
-						'name' => $category_3['name'],
-						'href' => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'])
+						'name'			=> $category_3['name'],
+						'category_id' 	=> $category_3['category_id'],
+						'children' 		=> $level_4_data,
+						'href' 			=> $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'])
 					);
 				}
 				
 				$level_2_data[] = array(
-					'name'     => $category_2['name'],
-					'children' => $level_3_data,
-					'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'])	
+					'name'     		=> $category_2['name'],
+					'category_id' 	=> $category_2['category_id'],
+					'children' 		=> $level_3_data,
+					'href'     		=> $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'])	
 				);					
 			}
 			
 			$this->data['categories'][] = array(
 				'name'     => $category_1['name'],
+				'category_id' 	=> $category_1['category_id'],
 				'children' => $level_2_data,
 				'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'])
 			);
-		}
+		}*/
 				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/header.tpl';

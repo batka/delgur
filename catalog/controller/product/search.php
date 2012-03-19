@@ -48,7 +48,15 @@ class ControllerProductSearch extends Controller {
 				}
 			}			
 		}
+		//Show category page if search filter_name is same as any current category
+		if($samecategory = $this->model_catalog_category->findSameCategory($filter_name)){
+			$this->redirect($this->url->link('product/category', 'path=' . $samecategory['category_id']));
+		}
+		//print_r($samecategory);die();
+		//echo $samecategory['category_id'];
 		
+
+		//echo $filter_name; die();
 		if (isset($this->request->get['filter_description'])) {
 			$filter_description = $this->request->get['filter_description'];
 		} else {
@@ -180,7 +188,7 @@ class ControllerProductSearch extends Controller {
 
 		$this->data['compare'] = $this->url->link('product/compare');
 		
-		$this->load->model('catalog/category');
+		
 		
 		// 3 Level Category Search
 		$this->data['categories'] = array();

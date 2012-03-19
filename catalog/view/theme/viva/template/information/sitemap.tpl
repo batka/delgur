@@ -10,7 +10,7 @@
     <div class="left">
       <ul>
         <?php foreach ($categories as $category_1) { ?>
-        <li><a href="<?php echo $category_1['href']; ?>"><?php echo $category_1['name']; ?></a>
+        <li class="first-level"><h2><strong><a href="<?php echo $category_1['href']; ?>"><?php echo $category_1['name']; ?></a></strong></h2>
           <?php if ($category_1['children']) { ?>
           <ul>
             <?php foreach ($category_1['children'] as $category_2) { ?>

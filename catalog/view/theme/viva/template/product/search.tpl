@@ -10,32 +10,44 @@
   <div class="content">
     <p><?php echo $entry_search; ?>
       <?php if ($filter_name) { ?>
-      <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" />
+      <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" size="80" />
       <?php } else { ?>
-      <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" onclick="this.value = '';" onkeydown="this.style.color = '000000'" style="color: #999;" />
+      <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" onclick="this.value = '';" onkeydown="this.style.color = '000000'" style="color: #999;" size="80" />
       <?php } ?>
-      <select name="filter_category_id">
+      <select name="filter_category_id" style="width: 250px;">
         <option value="0"><?php echo $text_category; ?></option>
         <?php foreach ($categories as $category_1) { ?>
-        <?php if ($category_1['category_id'] == $filter_category_id) { ?>
-        <option value="<?php echo $category_1['category_id']; ?>" selected="selected"><?php echo $category_1['name']; ?></option>
-        <?php } else { ?>
-        <option value="<?php echo $category_1['category_id']; ?>"><?php echo $category_1['name']; ?></option>
-        <?php } ?>
-        <?php foreach ($category_1['children'] as $category_2) { ?>
-        <?php if ($category_2['category_id'] == $filter_category_id) { ?>
-        <option value="<?php echo $category_2['category_id']; ?>" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_2['name']; ?></option>
-        <?php } else { ?>
-        <option value="<?php echo $category_2['category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_2['name']; ?></option>
-        <?php } ?>
-        <?php foreach ($category_2['children'] as $category_3) { ?>
-        <?php if ($category_3['category_id'] == $filter_category_id) { ?>
-        <option value="<?php echo $category_3['category_id']; ?>" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_3['name']; ?></option>
-        <?php } else { ?>
-        <option value="<?php echo $category_3['category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_3['name']; ?></option>
-        <?php } ?>
-        <?php } ?>
-        <?php } ?>
+        	<?php if ($category_1['category_id'] == $filter_category_id) { ?>
+        		<option value="<?php echo $category_1['category_id']; ?>" selected="selected">
+        			<?php echo $category_1['name']; ?>
+        		</option>
+        	<?php } else { ?>
+        		<option value="<?php echo $category_1['category_id']; ?>">
+        			<?php echo $category_1['name']; ?>
+        		</option>
+        	<?php } ?>
+        	<?php foreach ($category_1['children'] as $category_2) { ?>
+        		<?php if ($category_2['category_id'] == $filter_category_id) { ?>
+        			<option value="<?php echo $category_2['category_id']; ?>" selected="selected">
+        				-<?php echo $category_2['name']; ?>
+        			</option>
+        		<?php } else { ?>
+        			<option value="<?php echo $category_2['category_id']; ?>">
+        				-<?php echo $category_2['name']; ?>
+        			</option>
+        		<?php } ?>
+        		<?php foreach ($category_2['children'] as $category_3) { ?>
+        			<?php if ($category_3['category_id'] == $filter_category_id) { ?>
+        				<option value="<?php echo $category_3['category_id']; ?>" selected="selected">
+        					--<?php echo $category_3['name']; ?>
+        				</option>
+        			<?php } else { ?>
+        				<option value="<?php echo $category_3['category_id']; ?>">
+        					--<?php echo $category_3['name']; ?>
+        				</option>
+        			<?php } ?>
+        		<?php } ?>
+        	<?php } ?>
         <?php } ?>
       </select>
 	  <a id="button-search" class="button"><span><?php echo $button_search; ?></span></a>

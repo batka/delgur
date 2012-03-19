@@ -67,19 +67,23 @@
         <div><?php echo $text_qty; ?>
           <input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" />
           <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
-          &nbsp;<a id="button-cart" class="button"><span><?php echo $button_cart; ?></span></a></div>
+          &nbsp;<?php /*<a id="button-cart" class="button"><span><?php echo $button_cart; ?></span></a>*/?>
+          <input id="button-cart" type="button" name="doGo" value="Add to Cart">
+        </div>
 		  <script>
-			document.getElementById('button-cart').href = window.location + '#';
+			 //document.getElementById('button-cart').href = window.location + '#';
 		  </script>
         <?php if ($minimum > 1) { ?>
         <div class="minimum"><?php echo $text_minimum; ?></div>
         <?php } ?>
       </div>
       <!-- Taobao link BEGIN -->
-      <div class="links">
-      	<a title="Открыть оригинальную страницу этого товара на taobao.com" class="taobao-link" rel="nofollow" href="<?php echo $taobao_url; ?>" target="_blank">Этот товар на <strong>taobao.com</strong>
-      	</a>
-      </div>
+      <?php if(isset($taobao_url)){ ?>
+        <div class="links">
+        	<a title="Открыть оригинальную страницу этого товара на taobao.com" class="taobao-link" rel="nofollow" href="<?php echo $taobao_url; ?>" target="_blank">Этот товар на <strong>taobao.com</strong>
+        	</a>
+        </div>
+      <?php } ?>
       <!-- Taobao link END -->
       <?php if ($review_status) { ?>
       <div class="review">

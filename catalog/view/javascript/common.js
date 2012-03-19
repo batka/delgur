@@ -28,7 +28,7 @@ $(document).ready(function() {
 	});
 	
 	/* Ajax Cart */
-	$('#cart > .heading a').bind('click', function() {
+	$('#cart > .heading a').on('mouseover', function() {
 		$('#cart').addClass('active');
 		
 		$.ajax({
@@ -41,7 +41,7 @@ $(document).ready(function() {
 			}
 		});			
 		
-		$('#cart').bind('mouseleave', function() {
+		$('#cart').on('mouseleave', function() {
 			$(this).removeClass('active');
 		});
 	});

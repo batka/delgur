@@ -39,8 +39,11 @@
               <td id="<?php echo $category['category_id']; ?>" class="left edit_cat_name"><?php echo $category['name']; ?></td>
               
               <td id="<?php echo $category['category_id']; ?>" class="right edit_sort_order"><?php echo $category['sort_order']; ?></td>
-              <td class="right"><?php foreach ($category['action'] as $action) { ?>
-                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+              <td class="right">
+                <?php foreach ($category['action'] as $action) { ?>
+                  <a href="<?php echo $action['href']; ?>">
+                    <?php echo $action['text']; ?>
+                  </a>
                 <?php } ?></td>
             </tr>
             <?php } ?>

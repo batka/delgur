@@ -153,6 +153,7 @@ class ControllerProductCategory extends Controller {
 			
 			include_once(ROOT_PATH.'taoapi/web_tao/items.php');
 			$CallTaobao = new CallTaobao;
+			
 			list($sub_categories, $items, $product_total) = $CallTaobao->QueryItems($data);
 			
 			foreach ($items as $result) {
@@ -179,7 +180,7 @@ class ControllerProductCategory extends Controller {
 					'tax'         => false,
 					'rating'      => 0,
 					'reviews'     => false,
-					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'])
+					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . '&nick=' . $result['nick'])
 				);
 			}
 			

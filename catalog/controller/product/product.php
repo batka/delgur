@@ -6,15 +6,17 @@ class ControllerProductProduct extends Controller {
 		$this->language->load('product/product');
 	
 		$this->data['breadcrumbs'] = array();
-		//breadcrumbs home link
+		/* breadcrumbs HOME */
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home'),			
 			'separator' => false
 		);
 		
+		/* Load Category model for get manufacturer infos */
 		$this->load->model('catalog/category');	
 		
+		/* If Product has Manufacturer add manufacturer on breadcrumb */
 		if (isset($this->request->get['path'])) {
 			$path = '';
 				
@@ -37,8 +39,10 @@ class ControllerProductProduct extends Controller {
 			}
 		}
 		
+		/* Load Manufacture model for get manufacturer infos */
 		$this->load->model('catalog/manufacturer');	
 		
+		/* If there is manufacturer_id argument on URL add manufacturer on breadcrumb */
 		if (isset($this->request->get['manufacturer_id'])) {
 			$this->data['breadcrumbs'][] = array( 
 				'text'      => $this->language->get('text_brand'),
@@ -56,7 +60,9 @@ class ControllerProductProduct extends Controller {
 				);
 			}
 		}
+		 /* -END If there is manufacturer_id argument on URL add manufacturer on breadcrumb  */
 		
+		/* If there is filter_name or filter_tag argument on URL which is for SEARCH, add search info on breadcrumb */
 		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_tag'])) {
 			$url = '';
 			
@@ -83,6 +89,7 @@ class ControllerProductProduct extends Controller {
 			);	
 		}
 		
+		/* Get product_id argument to product_id variable. if no product_id argument 0 */
 		if (isset($this->request->get['product_id'])) {
 			$product_id = $this->request->get['product_id'];
 		} else {
@@ -95,7 +102,7 @@ class ControllerProductProduct extends Controller {
 		
 		$data['language'] = $_SESSION['language'];
 		$Item = $CallTaobao->QueryItem($data, 0);
-		
+		//print_r($Item);
 		
 		if ($Item) {
 			$url = '';
@@ -134,6 +141,10 @@ class ControllerProductProduct extends Controller {
 				$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
 			}
 			
+			//Add parent category to breadcrumb
+			//$category_info = $this->model_catalog_category->getCategory($path_id);
+
+
 			//Breadcrumb link for current product									
 			$this->data['breadcrumbs'][] = array(
 				'text'      => $product_info['product_id'],
@@ -147,20 +158,22 @@ class ControllerProductProduct extends Controller {
 			$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id']), 'canonical');
 			
 			//Preparing values to send to template
-			$this->data['heading_title'] = $product_info['name'];
-			$this->data['taobao_url'] = $Item['detail_url'];
-			$this->data['text_select'] = $this->language->get('text_select');
+			$this->data['heading_title'] 	= $product_info['name'];
+			$this->data['taobao_url'] 		= $Item['detail_url'];
+			$this->data['nick']				= $Item['nick'];
+			$this->data['text_select'] 		= $this->language->get('text_select');
 			$this->data['text_manufacturer'] = $this->language->get('text_manufacturer');
-			$this->data['text_model'] = $this->language->get('text_model');
-			$this->data['text_reward'] = $this->language->get('text_reward');
-			$this->data['text_points'] = $this->language->get('text_points');	
-			$this->data['text_discount'] = $this->language->get('text_discount');
-			$this->data['text_stock'] = $this->language->get('text_stock');
-			$this->data['text_price'] = $this->language->get('text_price');
-			$this->data['text_tax'] = $this->language->get('text_tax');
-			$this->data['text_discount'] = $this->language->get('text_discount');
-			$this->data['text_option'] = $this->language->get('text_option');
-			$this->data['text_qty'] = $this->language->get('text_qty');
+			$this->data['text_model'] 		= $this->language->get('text_model');
+			$this->data['text_reward'] 		= $this->language->get('text_reward');
+			$this->data['text_points'] 		= $this->language->get('text_points');	
+			$this->data['text_discount'] 	= $this->language->get('text_discount');
+			$this->data['text_stock'] 		= $this->language->get('text_stock');
+			$this->data['text_price'] 		= $this->language->get('text_price');
+			$this->data['text_tax'] 		= $this->language->get('text_tax');
+			$this->data['text_discount'] 	= $this->language->get('text_discount');
+			$this->data['text_option'] 		= $this->language->get('text_option');
+			$this->data['text_qty'] 		= $this->language->get('text_qty');
+			
 //			$this->data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
 			$this->data['text_or'] = $this->language->get('text_or');
 			$this->data['text_write'] = $this->language->get('text_write');

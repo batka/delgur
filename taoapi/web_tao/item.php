@@ -87,6 +87,7 @@ class CallTaobao {
 			die('Sorry! The product out of stock!');
 		}
 		
+
 		$Item = @$result['item']; //返回结果
 		$Item['props']          = isset($Item['props'])          ? $Item['props']            : '';
 		$Item['property_alias'] = isset($Item['property_alias']) ? $Item['property_alias']   : '';
@@ -97,6 +98,7 @@ class CallTaobao {
 		$Item['title']			= isset($Item['title'])      	 ? str_replace(array("包邮", "免邮"), '', $Item['title']) : '';
 		$Item['props_keys']   	= array();
 		$Item['props_values']   = array();
+		$Item['nick']          	= isset($Item['nick'])			 ? $Item['nick']            : '';
 		
 		$images = $desc = '';
 		if ($Item['desc'] != '')
@@ -125,12 +127,14 @@ class CallTaobao {
 		
 		
 		if($ItemCached = $this->DBCtrl->getItemCached($num_iid, $language_id))
-		{
+		{	
+			//print_r($ItemCached);die();
 			$Item['title'] = $ItemCached['name'];
 			$Item['desc']  = $this->getCachedDesc($num_iid, $data['language']);
 			$Item['meta_keyword']     = $ItemCached['meta_keyword'];
 			$Item['meta_description'] = $ItemCached['meta_description'];
-			
+			//$Item['nick'] = $ItemCached['taobao_nick'];
+			//echo $Item['nick']; die();
 			$Translator = new Translator;
 			
 			if (!empty($Item['property_alias']) && ($data['language'] != 'cn' && $data['language'] != 'zh-CN'))
@@ -161,10 +165,12 @@ class CallTaobao {
 		}
 		elseif ($ItemCached_CN)
 		{	
+			print_r($ItemCached_CN);die();
 			$Item['title'] = $ItemCached_CN['name'];
 			$Item['desc']  = $this->getCachedDesc($num_iid, 'cn');
 			$Item['meta_keyword']     = $ItemCached_CN['meta_keyword'];
 			$Item['meta_description'] = $ItemCached_CN['meta_description'];
+			$Item['nick'] = $ItemCached_CN['nick'];
 			
 			$desc    = $this->getCachedText($num_iid, 'cn');
 			$images  = $this->getCachedImages($num_iid, 'cn');			
@@ -435,7 +441,7 @@ class CallTaobao {
 		}
 		return $desc;
 	}
-	//缓存文本
+	//缓存文本 Get text file from cached/product
 	function getCachedText($id, $lang)
 	{
 		$file   = ROOT_PATH.'cached/product/'.$lang.'/'.$id.'.text';
@@ -445,7 +451,7 @@ class CallTaobao {
 		}
 		return '';
 	}
-	//取得图片集缓存
+	//取得图片集缓存 Get image links from cached/product
 	function getCachedImages($id, $lang)
 	{
 		$images = ROOT_PATH.'cached/product/'.$lang.'/'.$id.'.images';
@@ -474,7 +480,7 @@ class CallTaobao {
 		return array($images, $content);
 		
 	}
-	//缓存淘宝商品到本地 （sku不缓存）
+	//缓存淘宝商品到本地 （sku不缓存）Download product from taobao to local server
 	function addProduct($Item)
 	{		
 		$Product = array(

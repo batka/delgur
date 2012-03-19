@@ -1,7 +1,7 @@
 <div class="box">
-  <div class="box-heading"><?php echo $heading_title; ?></div>
-  <div class="box-content">
-    <div class="box-product">
+  <div class="box-featured-heading"><?php echo $heading_title; ?></div>
+  
+    <div class="box-featured">
       <?php foreach ($products as $product) { ?>
       <div>
       <?php //echo print_r($product);?>
@@ -25,5 +25,5 @@
       </div>
       <?php } ?>
     </div>
-  </div>
+  
 </div>
