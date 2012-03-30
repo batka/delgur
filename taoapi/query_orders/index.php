@@ -1,8 +1,8 @@
 <?php
 	session_start();
 	header("Content-Type:text/html;charset=UTF-8");
-	require_once('../config.php');
-	include_once dirname(__FILE__).'../lib/function.php';
+	require_once '../config.php';
+	require_once '../lib/function.php';
 	include_once('../model/opencart.php');
 ?>	
 <html>
@@ -62,7 +62,6 @@
 	
 	//解析Xml数据
 	$result = getXmlData($result);
-
 	if (empty($result)){
 		echo '没有订单数据返回';
 		exit;
@@ -72,7 +71,14 @@
 	
 	}
 	if ( ! empty($result['trades']['trade']))
-	{		
+	{
+		if ( ! isset($result['trades']['trade'][0]))
+		{
+			$trade = $result['trades']['trade'];
+			unset($result['trades']['trade']);
+			$result['trades']['trade'][0] = $trade;
+		}
+print_r($result);
 		$DBCtrl = new DBCtrlModel();
 		$DBCtrl->update_order($result['trades']['trade']);
 	}
