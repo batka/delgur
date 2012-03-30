@@ -222,10 +222,10 @@ class ControllerCheckoutConfirm extends Controller {
 			} 
 						
 			$data['products'] = $product_data;
-			$data['totals'] = $total_data;
+			$data['totals']  = $total_data;
 			$data['comment'] = $this->session->data['comment'];
-			$data['total'] = $total;
-			$data['reward'] = $this->cart->getTotalRewardPoints();
+			$data['total']   = $total_data[0]['value'];
+			$data['reward']  = $this->cart->getTotalRewardPoints();
 			
 			if (isset($this->request->cookie['tracking'])) {
 				$this->load->model('affiliate/affiliate');

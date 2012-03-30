@@ -193,11 +193,11 @@ class ControllerProductCategory extends Controller {
 			$this->data['sorts'] = array();
 			
 			/*	
-      <option value="price:desc">(价格从高到低)</option>
-      <option value="price:asc">(价格从低到高)</option>
-      <option value="seller_credit:desc">(信用等级从高到低)</option>
-      <option value="volume:desc">(成交量成高到低) </option>
-      <option value="volume:asc">(成交量从低到高</option>
+      <option value="price:desc">(录脹赂帽麓脫赂脽碌陆碌脥)</option>
+      <option value="price:asc">(录脹赂帽麓脫碌脥碌陆赂脽)</option>
+      <option value="seller_credit:desc">(脨脜脫脙碌脠录露麓脫赂脽碌陆碌脥)</option>
+      <option value="volume:desc">(鲁脡陆禄脕驴鲁脡赂脽碌陆碌脥) </option>
+      <option value="volume:asc">(鲁脡陆禄脕驴麓脫碌脥碌陆赂脽</option>
 	  */
 			$this->data['sorts'][] = array(
 				'text'  => $this->language->get('text_default'),

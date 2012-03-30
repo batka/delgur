@@ -1,6 +1,5 @@
 <script>
   (function(){
-    
     var body = $('body');
     body.on('mouseover', 'dl.cate-list-item', function(){
       $(this)
@@ -10,10 +9,15 @@
     body.on('mouseout', 'dl.cate-list-item', function(){
       $(this).removeClass('cate-current');
     });
-
   })();
-  
 </script>
+<!--[if IE]>
+  <script type="text/javascript">
+    (function(){
+      $('.categories .first-level ul li:last-child').addClass('last');
+    })();
+  </script>
+<![endif]-->
 <?php /*<!-- Footer Social -->
 <div id="footer-border"></div>
 <div class="clear"></div>
@@ -111,8 +115,6 @@
     </ul>
   </div>
 </div>
-
 <div id="powered"><?php echo $powered; ?></div>
-
 </div> <!-- END #Container -->
 </body></html>

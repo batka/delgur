@@ -34,6 +34,6 @@
 	$_SESSION['taoapi']['top_session'] = $top_session;
 	$_SESSION['taoapi']['parameters']  = $parameters;
 	$_SESSION['taoapi']['nick']        = iconv('GBK', 'utf-8', $parameters['visitor_nick']);
-	echo $ref;
-	//header('Location: '.$ref);
+	//echo $ref;
+	header('Location: '.$ref);
 ?>

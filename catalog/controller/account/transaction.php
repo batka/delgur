@@ -65,7 +65,7 @@ class ControllerAccountTransaction extends Controller {
  		
     	foreach ($results as $result) {
 			$this->data['transactions'][] = array(
-				'amount'      => $this->currency->format($result['amount'], $this->config->get('config_currency')),
+				'amount'      => $this->currency->format($result['amount'], $this->config->get('config_currency'), 1),
 				'description' => $result['description'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			);
@@ -80,7 +80,7 @@ class ControllerAccountTransaction extends Controller {
 			
 		$this->data['pagination'] = $pagination->render();
 		
-		$this->data['total'] = $this->currency->format($this->customer->getBalance());
+		$this->data['total'] = $this->currency->format($this->customer->getBalance(), null, 1);
 		
 		$this->data['continue'] = $this->url->link('account/account', '', 'SSL');
 		

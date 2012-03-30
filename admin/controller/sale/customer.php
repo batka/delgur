@@ -1143,13 +1143,13 @@ class ControllerSaleCustomer extends Controller {
       		
 		foreach ($results as $result) {
         	$this->data['transactions'][] = array(
-				'amount'      => $this->currency->format($result['amount'], $this->config->get('config_currency')),
+				'amount'      => $this->currency->format($result['amount'], $this->config->get('config_currency'), 1),
 				'description' => $result['description'],
         		'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
         	);
       	}			
 		
-		$this->data['balance'] = $this->currency->format($this->model_sale_customer->getTransactionTotal($this->request->get['customer_id']), $this->config->get('config_currency'));
+		$this->data['balance'] = $this->currency->format($this->model_sale_customer->getTransactionTotal($this->request->get['customer_id']), $this->config->get('config_currency'), 1);
 		
 		$transaction_total = $this->model_sale_customer->getTotalTransactions($this->request->get['customer_id']);
 			

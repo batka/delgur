@@ -87,6 +87,13 @@
           <td class="right"><b><?php echo $total['title']; ?>:</b></td>
           <td class="right"><?php echo $total['text']; ?></td>
         </tr>
+      <?php if (isset($total['balance'])) { ?>
+      <tr>
+        <td colspan="5"></td>
+        <td align="right"><b><?php echo $total['balance_title']; ?></b></td>
+        <td align="right"><?php echo $total['text_balance']; ?></td>
+      </tr>
+      <?php } ?>
         <?php } ?>
       </table>
     </div>
@@ -99,13 +106,13 @@
 </div>
 <script type="text/javascript"><!--
 $('.cart-module .cart-heading').bind('click', function() {
-	if ($(this).hasClass('active')) {
-		$(this).removeClass('active');
-	} else {
-		$(this).addClass('active');
-	}
-		
-	$(this).parent().find('.cart-content').slideToggle('slow');
+  if ($(this).hasClass('active')) {
+    $(this).removeClass('active');
+  } else {
+    $(this).addClass('active');
+  }
+    
+  $(this).parent().find('.cart-content').slideToggle('slow');
 });
 //--></script> 
 <?php echo $footer; ?>

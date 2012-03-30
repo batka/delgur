@@ -42,6 +42,12 @@
         <td colspan="5" class="price"><b><?php echo $total['title']; ?>:</b></td>
         <td class="total"><?php echo $total['text']; ?></td>
       </tr>
+      <?php if (isset($total['balance'])) { ?>
+      <tr>
+        <td colspan="5" align="right"><b><?php echo $total['balance_title']; ?></b></td>
+        <td align="right"><?php echo $total['text_balance']; ?></td>
+      </tr>
+      <?php } ?>
       <?php } ?>
     </tfoot>
   </table>

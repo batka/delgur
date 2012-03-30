@@ -96,13 +96,14 @@ class ControllerProductProduct extends Controller {
 			$product_id = 0;
 		}
 		
+		//include taoapi item.php
 		include_once(ROOT_PATH.'taoapi/web_tao/item.php');
 		$CallTaobao = new CallTaobao;
 		$data['num_iid'] = $product_id;
 		
 		$data['language'] = $_SESSION['language'];
 		$Item = $CallTaobao->QueryItem($data, 0);
-		//print_r($Item);
+		//print_r($Item); die();
 		
 		if ($Item) {
 			$url = '';

@@ -205,11 +205,14 @@
         <?php } else { ?>
         <input type="checkbox" name="agree" value="1" />
         <?php } ?>
-        <a onclick="$('#register').submit();" class="button"><span><?php echo $button_continue; ?></span></a></div>
+        <input type="submit" value="<?php echo $button_continue; ?>" class="button" />
+      </div>
     </div>
     <?php } else { ?>
     <div class="buttons">
-      <div class="right"><a onclick="$('#register').submit();" class="button"><span><?php echo $button_continue; ?></span></a></div>
+      <div class="right">
+        <input type="submit" value="<?php echo $button_continue; ?>" class="button" />
+      </div>
     </div>
     <?php } ?>
   </form>

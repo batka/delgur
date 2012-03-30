@@ -17,6 +17,7 @@ $_['text_select']           = ' --- Please Select --- ';
 $_['text_all_zones']        = 'All Zones';
 $_['text_pagination']       = 'Showing {start} to {end} of {total} ({pages} Pages)';
 $_['text_separator']        = ' &raquo; ';
+$_['text_balance']          = 'Balance:';
 
 // Buttons
 $_['button_add_address']    = 'Add Address';

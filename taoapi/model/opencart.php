@@ -138,7 +138,7 @@ class DBCtrlModel {
 				$sql = 'insert into ' . DB_PREFIX . 'category (`category_id`, `parent_id`, `taobao_cid`, `taobao_parent_cid`, `date_added`, `status`, `image`, `date_modified`, `top`) values ' . $SQL1;
 				
 				$sql = mb_substr($sql, 0, -1, 'utf-8');
-				
+				echo $sql;
 				$this->db_api->query($sql);
 			}
 			
@@ -147,7 +147,7 @@ class DBCtrlModel {
 				$sql = 'insert into ' . DB_PREFIX . 'category_description (`category_id`, `language_id`, `name`, `description`, `meta_description`, `meta_keyword`) values ' . $SQL2;
 				
 				$sql = mb_substr($sql, 0, -1, 'utf-8');
-				
+				echo $sql;
 				$this->db_api->query($sql);
 			}
 			if ($SQL3 != '')
@@ -293,6 +293,15 @@ class DBCtrlModel {
 			}
 		}
 		
+	}
+	
+	function update_order($data)
+	{
+		foreach ($data as $v)
+		{
+			$this->db_api->query("UPDATE " . DB_PREFIX . "order_product SET shipping_satus = '1', shipping_time = '" . $v['consign_time'] . "' WHERE shipping_satus = 0 AND taobao_order = '".$v['tid']."'");
+		}
+		echo '<font color="red" size=5>更新完成</b>';
 	}
 }
 ?>

@@ -101,11 +101,13 @@ class ControllerCommonHeader extends Controller {
       	$this->data['text_taoapi'] = $this->language->get('text_taoapi');
       	$this->data['text_taoapi_download'] = $this->language->get('text_taoapi_download');
       	$this->data['text_taoapi_down_category'] = $this->language->get('text_taoapi_down_category');
+      	$this->data['text_taoapi_down_order'] = $this->language->get('text_taoapi_down_order');
 		
 		if (!$this->user->isLogged() || !isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
 			$this->data['logged'] = '';
 			
 			$this->data['home'] = $this->url->link('common/login', '', 'SSL');
+			$this->data['ajax'] = 'http://localhost:8888/delgur/taoapi/category/save.php';
 		} else {			
 			$this->data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
 
@@ -185,6 +187,7 @@ class ControllerCommonHeader extends Controller {
 			
 			$this->data['taoapi_download'] = $this->url->link('taoapi/download', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['taoapi_down_category'] = $this->url->link('taoapi/down_category', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['taoapi_down_order'] = '../taoapi/query_orders';
 			$this->data['ajax'] = 'http://localhost:8888/delgur/taoapi/category/save.php';
 		}
 		

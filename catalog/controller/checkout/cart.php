@@ -478,8 +478,7 @@ class ControllerCheckoutCart extends Controller {
 	
 			array_multisort($sort_order, SORT_ASC, $total_data);
 		}
-		
-		$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, '', 1));
+		$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $total_data[0]['text']);
 		
 		$this->data['totals'] = $total_data;
 		

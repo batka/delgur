@@ -348,6 +348,8 @@ class ControllerSaleOrder extends Controller {
 				'href' => $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
 			);
 			*/
+			$query = $this->db->query('SELECT count(order_product_id) as count FROM os_order_product WHERE shipping_satus = 0 AND order_id = '.$result['order_id']);
+			$query_row = $query->row;
 			
 			$this->data['orders'][] = array(
 				'order_id'      => $result['order_id'],
@@ -359,7 +361,8 @@ class ControllerSaleOrder extends Controller {
 				'selected'      => isset($this->request->post['selected']) && in_array($result['order_id'], $this->request->post['selected']),
 				'action'        => $action,
 				'western_union_name' => $result['western_union_name'],
-				'western_union_pin' => $result['western_union_pin']
+				'western_union_pin' => $result['western_union_pin'],
+				'taobao_shipping_status' => $query_row['count'] == 0 ? '已发货' : '<font color="red">未发货/部分未发货</font>'
 			);
 		}
 
@@ -1270,7 +1273,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['payment_method'] = $order_info['payment_method'];
 			$this->data['western_union_name'] = $order_info['western_union_name'];
 			$this->data['western_union_pin'] = $order_info['western_union_pin'];
-			$this->data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value']);
+			$this->data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], 1);
 			$this->data['reward'] = $order_info['reward'];
 			
 			if ($order_info['total'] < 0) {
@@ -1369,6 +1372,8 @@ class ControllerSaleOrder extends Controller {
 					'option'   		   => $option_data,
 					'quantity'		   => $product['quantity'],
 					'taobao_order'	   => $product['taobao_order'],
+					'shipping_satus'   => $product['shipping_satus'],
+					'shipping_time'	   => $product['shipping_time'],
 					'price'    		   => $price,
 					'total'    		   => $total,
 					'href'     		   => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL')

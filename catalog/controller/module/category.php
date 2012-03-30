@@ -4,8 +4,7 @@ class ControllerModuleCategory extends Controller {
 		//loading category module
 		$this->language->load('module/category');
 		
-		//heading title for category module
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+		
 		
 		//if there is path in url then explode it by _ and give it to $parts
 		if (isset($this->request->get['path'])) {
@@ -37,15 +36,28 @@ class ControllerModuleCategory extends Controller {
 		//declare array $this->data['categories'] for categories
 		$this->data['categories'] = array();
 		
-		//if last $parts[] isset then use this id to getCategories and give it to 
-		//$children which is all the categories going to be on module category 
-		/*if(isset($parts[count($parts)-1]))
-			$children = $this->model_catalog_category->getCategories($parts[count($parts)-1]);
-		else
-			$children = $this->model_catalog_category->getCategories(0);
-		*/
-
-		$this->data['categories'] = $this->model_catalog_category->getAllCategories(0,10);
+		//if $parts[count($parts)-1] isset this means it has parent, which means this is not home page
+		if(isset($parts[count($parts)-1])){
+			//if top level true
+			$this->data['top_level'] = false;
+			//heading title for category module
+    		$this->data['heading_title'] = $this->language->get('child_categories');
+			//get all the children only not children of children
+			$children = $this->model_catalog_category->getCategories($parts[count($parts)-1], 20);
+			foreach ($children as $category_1) {
+				$this->data['categories'][] = array(
+					'name'     => $category_1['name'],
+					'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'])
+				);
+			}
+		}else{
+			//heading title for category module
+    		$this->data['heading_title'] = $this->language->get('heading_title');
+    		//Because this is home page get all the categories with all the children
+			$this->data['categories'] = $this->model_catalog_category->getAllCategories(0,15);
+			$this->data['top_level'] = true;
+		}
+		//$this->data['categories'] = $this->model_catalog_category->getAllCategories(0,10);
 		//print_r($categories);
 		
 		//print_r($children);

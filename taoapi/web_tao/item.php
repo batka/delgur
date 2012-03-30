@@ -165,12 +165,12 @@ class CallTaobao {
 		}
 		elseif ($ItemCached_CN)
 		{	
-			print_r($ItemCached_CN);die();
+			//print_r($ItemCached_CN);die();
 			$Item['title'] = $ItemCached_CN['name'];
 			$Item['desc']  = $this->getCachedDesc($num_iid, 'cn');
 			$Item['meta_keyword']     = $ItemCached_CN['meta_keyword'];
 			$Item['meta_description'] = $ItemCached_CN['meta_description'];
-			$Item['nick'] = $ItemCached_CN['nick'];
+			//$Item['nick'] = $ItemCached_CN['nick'];
 			
 			$desc    = $this->getCachedText($num_iid, 'cn');
 			$images  = $this->getCachedImages($num_iid, 'cn');			

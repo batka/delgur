@@ -32,6 +32,12 @@
     <td align="right"><b><?php echo $total['title']; ?></b></td>
     <td align="right"><?php echo $total['text']; ?></td>
   </tr>
+    <?php if (isset($total['balance'])) { ?>
+    <tr>
+    <td align="right"><b><?php echo $total['balance_title']; ?></b></td>
+    <td align="right"><?php echo $total['text_balance']; ?></td>
+    </tr>
+    <?php } ?>
   <?php } ?>
 </table>
 <div class="checkout"><a href="<?php echo $checkout; ?>" class="button"><span><?php echo $button_checkout; ?></span></a></div>

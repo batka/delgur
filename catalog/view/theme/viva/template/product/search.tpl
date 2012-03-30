@@ -85,7 +85,7 @@
     <?php foreach ($products as $product) { ?>
     <div>
       <?php if ($product['thumb']) { ?>
-      <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" /></a></div>
+      <div class="image"><a href="<?php echo $product['href'].'&nick='.$product['nick']; ?>"><img src="<?php echo $product['thumb']; ?>" /></a></div>
       <?php } ?>
       <?php if ($product['price']) { ?>
       <div class="price">

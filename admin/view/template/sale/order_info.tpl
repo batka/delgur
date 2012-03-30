@@ -293,7 +293,8 @@
 				<a href="http://item.taobao.com/item.htm?id=<?php echo $product['product_id'] ?>" target="_blank"><b>到淘宝下单>></b></a><br />
 				输入淘宝单号：<input type="text" id="taobao_order[<?php echo $product['order_product_id'] ?>]" name="taobao_order[<?php echo $product['order_product_id'] ?>]" >
 				<?php } else { ?>
-				淘宝订单号: <?php echo $product['taobao_order']; ?>
+				淘宝订单号: <?php echo $product['taobao_order']; ?><br />
+					<?php if ($product['shipping_satus'] == 1) echo '已发货：'.$product['shipping_time']; ?>
 				<?php } ?>
 			  </td>
               <td class="left"><?php echo $product['model']; ?></td>

@@ -25,36 +25,21 @@
 <script type="text/javascript" src="view/javascript/jquery/superfish/js/superfish.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/jquery.jeditable.js"></script>
 <script>
-	$(document).ready(function() {
-		
-		
-		$('.edit_sort_order').editable('<?php echo $ajax ?>', {
-			submitdata : {change: "sort_order"},
-			submit    : 'ok',
-	        indicator : '<img src="view/image/indicator.gif">',
-	        tooltip   : 'Click to edit...'
-			
-	    });
-		$('.edit_cat_name').editable('<?php echo $ajax ?>', {
-			submitdata : {change: "cat_name"},
-			submit    : 'ok',
-	        indicator : '<img src="view/image/indicator.gif">',
-	        tooltip   : 'Click to edit...'
-			
-	    });
-		
-		/*$('.edit_area').editable(function(value, settings) { 
-		     console.log(this);
-		     console.log(value);
-		     console.log(settings);
-		     return(value);
-		  }, { 
-		     submit    : 'ok',
-	         indicator : '<img src="view/image/indicator.gif">',
-	         tooltip   : 'Click to edit...',
-			 id		   : '45',
-		 });*/
-	 });
+  /*$(document).ready(function() {
+    $('.edit_sort_order').editable('<?php echo $ajax ?>', {
+      submitdata : {change: "sort_order"},
+      submit    : 'ok',
+          indicator : '<img src="view/image/indicator.gif">',
+          tooltip   : 'Click to edit...'
+      
+      });
+    $('.edit_cat_name').editable('<?php echo $ajax ?>', {
+      submitdata : {change: "cat_name"},
+      submit    : 'ok',
+          indicator : '<img src="view/image/indicator.gif">',
+          tooltip   : 'Click to edit...'
+      });
+   });*/
 </script>
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
@@ -72,7 +57,7 @@ $(document).ready(function(){
             }
         }
     });
-    	
+      
     // Confirm Uninstall
     $('a').click(function(){
         if ($(this).attr('href') != null && $(this).attr('href').indexOf('uninstall', 1) != -1) {
@@ -85,7 +70,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-	<span id="messages"></span>
+  <span id="messages"></span>
 <div id="container">
 <div id="header">
   <div class="div1">
@@ -119,6 +104,7 @@ $(document).ready(function(){
         <ul>
           <li><a href="<?php echo $taoapi_download; ?>"><?php echo $text_taoapi_download; ?></a></li>
           <li><a href="<?php echo $taoapi_down_category; ?>"><?php echo $text_taoapi_down_category; ?></a></li>
+          <li><a href="<?php echo $taoapi_down_order; ?>" target="_blank"><?php echo $text_taoapi_down_order; ?></a></li>
         </ul>
       </li>
       <li id="extension"><a class="top"><?php echo $text_extension; ?></a>
@@ -247,61 +233,61 @@ $(document).ready(function(){
     </ul>
     <script type="text/javascript"><!--
 $(document).ready(function() {
-	$('#menu > ul').superfish({
-		hoverClass	 : 'sfHover',
-		pathClass	 : 'overideThisToUse',
-		delay		 : 0,
-		animation	 : {height: 'show'},
-		speed		 : 'normal',
-		autoArrows   : false,
-		dropShadows  : false, 
-		disableHI	 : false, /* set to true to disable hoverIntent detection */
-		onInit		 : function(){},
-		onBeforeShow : function(){},
-		onShow		 : function(){},
-		onHide		 : function(){}
-	});
-	
-	$('#menu > ul').css('display', 'block');
+  $('#menu > ul').superfish({
+    hoverClass   : 'sfHover',
+    pathClass  : 'overideThisToUse',
+    delay    : 0,
+    animation  : {height: 'show'},
+    speed    : 'normal',
+    autoArrows   : false,
+    dropShadows  : false, 
+    disableHI  : false, /* set to true to disable hoverIntent detection */
+    onInit     : function(){},
+    onBeforeShow : function(){},
+    onShow     : function(){},
+    onHide     : function(){}
+  });
+  
+  $('#menu > ul').css('display', 'block');
 });
  
 function getURLVar(urlVarName) {
-	var urlHalves = String(document.location).toLowerCase().split('?');
-	var urlVarValue = '';
-	
-	if (urlHalves[1]) {
-		var urlVars = urlHalves[1].split('&');
+  var urlHalves = String(document.location).toLowerCase().split('?');
+  var urlVarValue = '';
+  
+  if (urlHalves[1]) {
+    var urlVars = urlHalves[1].split('&');
 
-		for (var i = 0; i <= (urlVars.length); i++) {
-			if (urlVars[i]) {
-				var urlVarPair = urlVars[i].split('=');
-				
-				if (urlVarPair[0] && urlVarPair[0] == urlVarName.toLowerCase()) {
-					urlVarValue = urlVarPair[1];
-				}
-			}
-		}
-	}
-	
-	return urlVarValue;
+    for (var i = 0; i <= (urlVars.length); i++) {
+      if (urlVars[i]) {
+        var urlVarPair = urlVars[i].split('=');
+        
+        if (urlVarPair[0] && urlVarPair[0] == urlVarName.toLowerCase()) {
+          urlVarValue = urlVarPair[1];
+        }
+      }
+    }
+  }
+  
+  return urlVarValue;
 } 
 
 $(document).ready(function() {
-	route = getURLVar('route');
-	
-	if (!route) {
-		$('#dashboard').addClass('selected');
-	} else {
-		part = route.split('/');
-		
-		url = part[0];
-		
-		if (part[1]) {
-			url += '/' + part[1];
-		}
-		
-		$('a[href*=\'' + url + '\']').parents('li[id]').addClass('selected');
-	}
+  route = getURLVar('route');
+  
+  if (!route) {
+    $('#dashboard').addClass('selected');
+  } else {
+    part = route.split('/');
+    
+    url = part[0];
+    
+    if (part[1]) {
+      url += '/' + part[1];
+    }
+    
+    $('a[href*=\'' + url + '\']').parents('li[id]').addClass('selected');
+  }
 });
 //--></script> 
   </div>

@@ -81,4 +81,5 @@ $_['text_zone']                        = '国家地区';
 $_['text_taoapi']                      = '淘宝接口';
 $_['text_taoapi_download']             = '下载商品';
 $_['text_taoapi_down_category']        = '下载分类';
+$_['text_taoapi_down_order']        = '下载订单';
 ?>

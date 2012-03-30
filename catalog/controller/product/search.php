@@ -52,6 +52,11 @@ class ControllerProductSearch extends Controller {
 		if($samecategory = $this->model_catalog_category->findSameCategory($filter_name)){
 			$this->redirect($this->url->link('product/category', 'path=' . $samecategory['category_id']));
 		}
+
+		//if search filter_name is id then show the product
+		if(is_numeric($filter_name)){
+			$this->redirect($this->url->link('product/product', '&product_id=' . $filter_name));
+		}
 		//print_r($samecategory);die();
 		//echo $samecategory['category_id'];
 		
@@ -238,6 +243,7 @@ class ControllerProductSearch extends Controller {
 				'page'       => $page,
 				'page_size'  => $limit
 			);
+			if(isset($this->request->get['search_type'])) $data['search_type']= $this->request->get['search_type'];
 			
 			include_once(ROOT_PATH.'taoapi/web_tao/items.php');
 			$CallTaobao = new CallTaobao;

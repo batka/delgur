@@ -98,7 +98,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_home'] = $this->language->get('text_home');
 		$this->data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
 		$this->data['text_cart'] = $this->language->get('text_cart');
-		$this->data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, '', 1));
+		$this->data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $total_data[0]['text']);
     	$this->data['text_search'] = $this->language->get('text_search');
     	$this->data['button_search'] = $this->language->get('text_search');
 		$this->data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
@@ -213,61 +213,15 @@ class ControllerCommonHeader extends Controller {
         }else $this->data['current_page'] = "";
 
         if($this->data['current_page'] != "homepage"){
-	        $this->data['categories'] = $this->model_catalog_category->getAllCategories(0,10);
+	        $this->data['categories'] = $this->model_catalog_category->getAllCategories(0,15);
 		}
-		/*$this->data['categories'] = array();
-					
-		$categories_1 = $this->model_catalog_category->getCategories(0);
+
+		//other categories link
+		$this->data['other_categories'] = array(
+				'name' => $this->language->get('text_other_categories'),
+				'href' => $this->url->link('information/categories')
+		);
 		
-		foreach ($categories_1 as $category_1) {
-			$level_2_data = array();
-			
-			$categories_2 = $this->model_catalog_category->getCategories($category_1['category_id']);
-			
-			foreach ($categories_2 as $category_2) {
-				$level_3_data = array();
-				
-				$categories_3 = $this->model_catalog_category->getCategories($category_2['category_id']);
-				
-				foreach ($categories_3 as $category_3) {
-					$level_4_data = array();
-
-					$categories_4 = $this->model_catalog_category->getCategories($category_3['category_id']);
-					
-					foreach ($categories_4 as $category_4) {
-
-						$level_4_data[] = array(
-							'name' 			=> $category_4['name'],
-							'category_id' 	=> $category_4['category_id'],
-							'href' 			=> $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'] . '_' . $category_4['category_id'])
-						);
-
-						
-					}
-					
-					$level_3_data[] = array(
-						'name'			=> $category_3['name'],
-						'category_id' 	=> $category_3['category_id'],
-						'children' 		=> $level_4_data,
-						'href' 			=> $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'])
-					);
-				}
-				
-				$level_2_data[] = array(
-					'name'     		=> $category_2['name'],
-					'category_id' 	=> $category_2['category_id'],
-					'children' 		=> $level_3_data,
-					'href'     		=> $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'])	
-				);					
-			}
-			
-			$this->data['categories'][] = array(
-				'name'     => $category_1['name'],
-				'category_id' 	=> $category_1['category_id'],
-				'children' => $level_2_data,
-				'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'])
-			);
-		}*/
 				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/header.tpl';

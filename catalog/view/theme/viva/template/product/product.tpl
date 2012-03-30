@@ -1,5 +1,4 @@
 <?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
-
 <div id="content" class="goog-trans-section"><?php echo $content_top; ?>
   <div class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -9,9 +8,7 @@
     	<?php }else{ ?>
     		#: <span class="product_id"><?php echo $breadcrumb['text']; ?></span>
     	<?php } ?>
-    
     <?php } ?>
-    
   </div>
   <h1><?php echo $heading_title; ?></h1>
   <div class="product-info">
@@ -30,10 +27,41 @@
     </div>
     <?php } ?>
     <div class="right">
-      <div class="description">
-        <span><?php echo $text_model; ?></span> <?php echo $model; ?><br />
-	  </div>
-      <?php if ($price) { ?>
+      <table class="product-info">
+        <tbody>
+          <tr class="description">
+            <td class="td1"><?php echo $text_model; ?></td>
+            <td><?php echo $model; ?></td>
+          </tr>
+          <tr class="price">
+            <?php if ($price) { ?>
+            <td><?php echo $text_price; ?></td>
+            <td>
+              <div class="usd">
+                <?php if (!$special) { ?>
+                  <span class="price_normal"><?php echo $price; ?></span>
+                  <?php } else { ?>
+                  <span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
+                  <?php } ?>
+                  <br />
+                  <?php if ($tax) { ?>
+                  <span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span><br />
+                <?php } ?>
+              </div>
+              <?php /*<div class="rur">
+                888.88 руб. ~ 889.88 руб.
+              </div>*/?>
+            </td>
+            <?php } ?>
+          </tr>
+          <?php /*<tr>
+            <td class="td1">Находится в:</td>
+            <td>Пекин (Пекин)</td>
+          </tr>*/ ?>
+        </tbody>
+      </table>
+
+      <?php /*if ($price) { ?>
       <div class="price"><?php echo $text_price; ?>
 		
         <?php if (!$special) { ?>
@@ -47,21 +75,21 @@
         <?php } ?>
 		
       </div>
-      <?php } ?>
-	<?php if ($product_info['options']) { ?>
-	<?php foreach ($product_info['options']['options'] as $key => $name) { ?>
-	<div id="option-<?php echo $key ?>" class="option">
-	  <label style="display:block;width:130px;font-weight:bold;"><?php echo $name ?>:</label>
-	  <select name="option[<?php echo $key; ?>]" style="width:250px;">
-		<option value=""><?php echo $text_select; ?></option>
-		<?php foreach ($product_info['options']['values'][$key] as $value => $text) { ?>
-		<option value="<?php echo $value ?>"><?php echo $text; ?></option>
-		<?php } ?>
-	  </select>
-	</div>
-	<br />
-	<?php 	} ?>
-	<?php } ?>
+      <?php } */?>
+    	<?php if ($product_info['options']) { ?>
+      	<?php foreach ($product_info['options']['options'] as $key => $name) { ?>
+        	<div id="option-<?php echo $key ?>" class="option">
+        	  <label style="display:block;width:130px;font-weight:bold;"><?php echo $name ?>:</label>
+        	  <select name="option[<?php echo $key; ?>]" style="width:250px;">
+        		<option value=""><?php echo $text_select; ?></option>
+        		<?php foreach ($product_info['options']['values'][$key] as $value => $text) { ?>
+        		<option value="<?php echo $value ?>"><?php echo $text; ?></option>
+        		<?php } ?>
+        	  </select>
+        	</div>
+        	<br />
+      	<?php } ?>
+    	<?php } ?>
 	  
       <div class="cart">
         <div><?php echo $text_qty; ?>
@@ -70,6 +98,7 @@
           &nbsp;<?php /*<a id="button-cart" class="button"><span><?php echo $button_cart; ?></span></a>*/?>
           <input id="button-cart" type="button" name="doGo" value="Add to Cart">
         </div>
+        
 		  <script>
 			 //document.getElementById('button-cart').href = window.location + '#';
 		  </script>
@@ -77,6 +106,12 @@
         <div class="minimum"><?php echo $text_minimum; ?></div>
         <?php } ?>
       </div>
+
+      <?php /*<!-- vkontakte -->
+      <div id="vk_like"></div>
+        <script type="text/javascript">
+        VK.Widgets.Like("vk_like", {type: "full"});
+        </script>*/?>
       <!-- Taobao link BEGIN -->
       <?php if(isset($taobao_url)){ ?>
         <div class="links">
@@ -252,7 +287,7 @@ $('#button-cart').bind('click', function() {
 });
 //--></script>
 <?php if ($options) { ?>
-<script type="text/javascript" src="catalog/view/javascript/jquery/ajaxupload.js"></script>
+<?php /*<script type="text/javascript" src="catalog/view/javascript/jquery/ajaxupload.js"></script> */?>
 <?php foreach ($options as $option) { ?>
 <?php if ($option['type'] == 'file') { ?>
 <script type="text/javascript"><!--

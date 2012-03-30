@@ -1,6 +1,6 @@
 <?php
 // Heading 
-$_['heading_title']                  = 'Оформление заказа';
+$_['heading_title']                  = 'Оформить заказ';
 // Text
 $_['text_cart']                      = 'Корзина покупок';
 $_['text_checkout_option']           = 'Шаг 1: Способ оформления заказа';

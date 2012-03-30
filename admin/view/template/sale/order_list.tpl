@@ -39,6 +39,7 @@
                 <?php } ?></td>
               <td class="left">Western Union Name</td>
               <td class="left">Western Union PIN</td>
+              <td class="left">淘宝发货情况</td>
               <td class="right"><?php if ($sort == 'o.total') { ?>
                 <a href="<?php echo $sort_total; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_total; ?></a>
                 <?php } else { ?>
@@ -79,6 +80,7 @@
                 </select></td>
 			  <td align="left"><input type="text" name="filter_western_union_name" value="<?php echo $filter_western_union_name; ?>" size="6" style="text-align: left;" /></td>
 			  <td align="left"><input type="text" name="filter_western_union_pin" value="<?php echo $filter_western_union_pin; ?>" size="6" style="text-align: left;" /></td>
+			  <td align="left"></td>
               <td align="right"><input type="text" name="filter_total" value="<?php echo $filter_total; ?>" size="4" style="text-align: right;" /></td>
               <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="date" /></td>
               <td><input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" size="12" class="date" /></td>
@@ -97,6 +99,7 @@
               <td class="left"><?php echo $order['status']; ?></td>
               <td align="left"><?php echo $order['western_union_name']; ?></td>
               <td align="left"><?php echo $order['western_union_pin']; ?></td>
+              <td align="left"><?php echo $order['taobao_shipping_status']; ?></td>
               <td class="right"><?php echo $order['total']; ?></td>
               <td class="left"><?php echo $order['date_added']; ?></td>
               <td class="left"><?php echo $order['date_modified']; ?></td>
